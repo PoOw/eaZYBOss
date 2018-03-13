@@ -3,4 +3,5 @@
     <string name="button_scan_etu">Scan carte étudiante</string>
     <string name="button_scan_prof">Scan carte prof</string>
     <string name="button_scan_carte">Scan carte zybo</string>
+    <string name="button_send">Envoyer</string>
 </resources>

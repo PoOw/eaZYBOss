@@ -4,6 +4,8 @@
 
     <!-- We need it for the barcode scanner -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Needed to send http request to the server -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"

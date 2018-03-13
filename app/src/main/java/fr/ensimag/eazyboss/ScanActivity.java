@@ -18,9 +18,9 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 /**
- *
+ * The activity for scanning barcode. Launched by the main activity, this activity
+ * send the barcode scanned to MainActivity via an intent and then finish
  */
-
 public class ScanActivity extends Activity {
     SurfaceView cameraPreview;
 
