@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
      * We're using Volley
      */
     private void sendingPostRequest() {
-        String url = "https://eazyboss.glitch.me/";
+        String url = "https://eazyboss.glitch.me/ajout";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
