@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     Button scanCarte;
     Button send;
     Button currentButton;
+    RadioButton empruntButton;
+    RadioButton retourButton;
     RequestQueue queue;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
 
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         scanProf = findViewById(R.id.button_scan_prof);
         scanCarte = findViewById(R.id.button_scan_carte);
         send = findViewById(R.id.button_send);
+        empruntButton = findViewById(R.id.button_emprunt);
+        retourButton = findViewById(R.id.button_retour);
 
         scanEtu.setOnClickListener(scanner);
         scanProf.setOnClickListener(scanner);
@@ -72,7 +77,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO Vérifier que toutes les infos sont présentes
-                sendingPostRequest();
+                if (!(empruntButton.isChecked() || retourButton.isChecked())) {
+                    Toast.makeText(getApplicationContext(),
+                            "Veuillez sélectionner un mode !", Toast.LENGTH_SHORT).show();
+                } else {
+                    sendingPostRequest();
+                }
             }
         });
     }
@@ -92,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
      * We're using Volley
      */
     private void sendingPostRequest() {
-        String url = "https://eazyboss.glitch.me/";
+        String url = "https://eazyboss.glitch.me/ajout";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -117,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
                 params.put("etudiant", scanEtu.getText().toString());
                 params.put("carte", scanCarte.getText().toString());
                 params.put("prof", scanProf.getText().toString());
+                if (empruntButton.isChecked()) {
+                    params.put("emprunt", "true");
+                } else {
+                    params.put("emprunt", "false");
+                }
                 return params;
             }
         };
