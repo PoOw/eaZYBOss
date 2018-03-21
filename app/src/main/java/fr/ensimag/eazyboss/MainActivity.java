@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     Button scanEtu;
     Button scanProf;
     Button scanCarte;
+    TextView resultEtu;
+    TextView resultProf;
+    TextView resultCarte;
     Button send;
     Button currentButton;
     RadioButton empruntButton;
@@ -68,13 +72,16 @@ public class MainActivity extends AppCompatActivity {
                 // We get the barcode that the scan activity sent
                 Barcode barcode = data.getParcelableExtra("barcode");
                 // We display the value of the barcode in the current button
-                currentButton.setText(barcode.displayValue);
+                // currentButton.setText(barcode.displayValue);
                 // We need to set the boolean value associated to the Button to true
                 if (currentButton == scanEtu) {
+                    resultEtu.setText(barcode.displayValue);
                     etuOk = true;
                 } else if (currentButton == scanProf) {
+                    resultProf.setText(barcode.displayValue);
                     profOk = true;
                 } else {
+                    resultCarte.setText(barcode.displayValue);
                     carteOk = true;
                 }
             } else {
@@ -94,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
         send = findViewById(R.id.button_send);
         empruntButton = findViewById(R.id.button_emprunt);
         retourButton = findViewById(R.id.button_retour);
+        resultCarte = findViewById(R.id.result_carte);
+        resultEtu = findViewById(R.id.result_etu);
+        resultProf = findViewById(R.id.result_prof);
 
         scanEtu.setOnClickListener(scanner);
         scanProf.setOnClickListener(scanner);
@@ -101,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Vérifier que toutes les infos sont présentes
                 if (!(empruntButton.isChecked() || retourButton.isChecked())) {
                     Toast.makeText(getApplicationContext(),
                             "Veuillez sélectionner un mode !", Toast.LENGTH_SHORT).show();
@@ -166,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("etudiant", scanEtu.getText().toString());
-                params.put("carte", scanCarte.getText().toString());
-                params.put("prof", scanProf.getText().toString());
+                params.put("etudiant", resultEtu.getText().toString());
+                params.put("carte", resultCarte.getText().toString());
+                params.put("prof", resultProf.getText().toString());
                 if (empruntButton.isChecked()) {
                     params.put("emprunt", "true");
                 } else {

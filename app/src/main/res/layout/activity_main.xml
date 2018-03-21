@@ -13,6 +13,23 @@
         android:layout_width="match_parent"
         android:layout_margin="16dp"
         android:text="@string/button_scan_etu"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:text="@string/text_scan_etu"/>
+        <TextView
+            android:id="@+id/result_etu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/result_scan_etu"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_scan_prof"
@@ -20,6 +37,23 @@
         android:layout_width="match_parent"
         android:layout_margin="16dp"
         android:text="@string/button_scan_prof"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:text="@string/text_scan_prof"/>
+        <TextView
+            android:id="@+id/result_prof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/result_scan_prof"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_scan_carte"
@@ -27,6 +61,25 @@
         android:layout_width="match_parent"
         android:layout_margin="16dp"
         android:text="@string/button_scan_carte"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:text="@string/text_scan_carte"/>
+        <TextView
+            android:id="@+id/result_carte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/result_scan_carte"/>
+
+    </LinearLayout>
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -38,12 +91,14 @@
             android:id="@+id/button_emprunt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:text="Emprunt"/>
 
         <RadioButton
             android:id="@+id/button_retour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:text="Retour"/>
     </RadioGroup>
 
