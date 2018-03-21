@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,20 +26,21 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    boolean etuOk = false;
-    boolean profOk = false;
-    boolean carteOk = false;
-    Button scanEtu;
-    Button scanProf;
-    Button scanCarte;
-    TextView resultEtu;
-    TextView resultProf;
-    TextView resultCarte;
-    Button send;
-    Button currentButton;
-    RadioButton empruntButton;
-    RadioButton retourButton;
-    RequestQueue queue;
+    private boolean etuOk = false;
+    private boolean profOk = false;
+    private boolean carteOk = false;
+    private Button scanEtu;
+    private Button scanProf;
+    private Button scanCarte;
+    private TextView resultEtu;
+    private TextView resultProf;
+    private TextView resultCarte;
+    private Button send;
+    private Button currentButton;
+    private RadioButton empruntButton;
+    private RadioButton retourButton;
+    private RequestQueue queue;
+    private ProgressBar spinner;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
 
@@ -105,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
         resultEtu = findViewById(R.id.result_etu);
         resultProf = findViewById(R.id.result_prof);
 
+        spinner=findViewById(R.id.progress_bar);
+        spinner.setVisibility(View.GONE);
+
         scanEtu.setOnClickListener(scanner);
         scanProf.setOnClickListener(scanner);
         scanCarte.setOnClickListener(scanner);
@@ -118,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Veuillez effectuer les 3 scans avant d'envoyer la requête !", Toast.LENGTH_SHORT).show();
                 } else {
+                    spinner.setVisibility(View.VISIBLE);
                     sendingPostRequest();
                 }
             }
@@ -158,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        spinner.setVisibility(View.GONE);
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "Envoi effectué avec succès", Toast.LENGTH_LONG);
                         toast.show();
@@ -166,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // TODO Manage the error
+                spinner.setVisibility(View.GONE);
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Echec de la requête http", Toast.LENGTH_LONG);
                 toast.show();
