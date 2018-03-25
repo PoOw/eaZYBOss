@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">eaZYBOss</string>
     <string name="button_scan_etu">Scan carte étudiante</string>
+    <string name="button_scan">Scan</string>
     <string name="text_scan_etu">Carte étudiante :</string>
-    <string name="result_scan_etu"></string>
+    <string name="result_scan_etu">pas encore scannée</string>
     <string name="button_scan_prof">Scan carte prof</string>
     <string name="text_scan_prof">Carte prof :</string>
-    <string name="result_scan_prof"></string>
+    <string name="result_scan_prof">pas encore scannée</string>
     <string name="button_scan_carte">Scan carte zybo</string>
     <string name="text_scan_carte">Carte ZYBO :</string>
-    <string name="result_scan_carte"></string>
+    <string name="result_scan_carte">pas encore scannée</string>
     <string name="button_send">Envoyer</string>
+    <string name="confirm_dialog">Envoi effectué avec succès</string>
+    <string name="duree_1">1 semaines</string>
+    <string name="duree_2">2 semaines</string>
+    <string name="duree_3">1 mois</string>
 </resources>

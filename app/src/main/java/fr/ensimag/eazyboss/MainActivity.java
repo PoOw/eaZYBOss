@@ -1,15 +1,20 @@
 package fr.ensimag.eazyboss;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton retourButton;
     private RequestQueue queue;
     private ProgressBar spinner;
+    private SeekBar duree;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
 
@@ -110,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         spinner=findViewById(R.id.progress_bar);
         spinner.setVisibility(View.GONE);
 
+
+
+
         scanEtu.setOnClickListener(scanner);
         scanProf.setOnClickListener(scanner);
         scanCarte.setOnClickListener(scanner);
@@ -152,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     /**
      * Send a request to the server using POST method
