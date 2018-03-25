@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.sax.RootElement;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue queue;
     private ProgressBar spinner;
     private SeekBar duree;
+    private RelativeLayout choixDuree;
+    private RadioGroup radioType;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
 
@@ -116,8 +121,21 @@ public class MainActivity extends AppCompatActivity {
         spinner=findViewById(R.id.progress_bar);
         spinner.setVisibility(View.GONE);
 
+        choixDuree = findViewById(R.id.choix_duree);
+        choixDuree.setVisibility(View.GONE);
 
+        radioType = findViewById(R.id.radio_type);
+        radioType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(findViewById(i).equals(empruntButton)) {
+                    choixDuree.setVisibility(View.VISIBLE);
+                } else {
+                    choixDuree.setVisibility(View.GONE);
+                }
 
+            }
+        });
 
         scanEtu.setOnClickListener(scanner);
         scanProf.setOnClickListener(scanner);
@@ -137,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     @Override
