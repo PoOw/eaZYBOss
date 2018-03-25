@@ -9,110 +9,113 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/button_scan_etu"
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentLeft="true"
         android:layout_height="wrap_content"
-        android:text="@string/button_scan" />
+        android:layout_margin="10dp">
+
+        <Button
+            android:id="@+id/button_scan_etu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="@string/button_scan" />
 
         <!-- TODO aligner mieux que ça -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_toRightOf="@+id/button_scan_etu">
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:text="@string/text_scan_etu" />
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/button_scan_etu"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/result_etu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:text="@string/result_scan_etu" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/text_scan_etu" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/result_etu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/result_scan_etu" />
+
+        </LinearLayout>
     </RelativeLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/button_scan_prof"
-        android:layout_centerInParent="true"
-        android:layout_alignParentLeft="true"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_scan" />
+        android:layout_margin="10dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_toRightOf="@+id/button_scan_prof"
-        android:orientation="vertical">
-
-        <TextView
+        <Button
+            android:id="@+id/button_scan_prof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:text="@string/text_scan_prof" />
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="@string/button_scan" />
 
-        <TextView
-            android:id="@+id/result_prof"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_height="wrap_content"
-            android:text="@string/result_scan_prof" />
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/button_scan_prof"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/text_scan_prof" />
+
+            <TextView
+                android:id="@+id/result_prof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/result_scan_prof" />
+
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/button_scan_carte"
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentLeft="true"
         android:layout_height="wrap_content"
-        android:text="@string/button_scan" />
+        android:layout_margin="10dp">
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_toRightOf="@+id/button_scan_carte">
-
-        <TextView
+        <Button
+            android:id="@+id/button_scan_carte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:text="@string/text_scan_carte" />
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="@string/button_scan" />
 
-        <TextView
-            android:id="@+id/result_carte"
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_height="wrap_content"
-            android:text="@string/result_scan_carte" />
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/button_scan_carte"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/text_scan_carte" />
+
+            <TextView
+                android:id="@+id/result_carte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/result_scan_carte" />
+
+        </LinearLayout>
     </RelativeLayout>
 
 
@@ -129,30 +132,31 @@
             android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type d'opération :"
-            android:layout_margin="10dp"
-            android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
-            android:layout_gravity="center_vertical"/>
-        <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
             android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/type">
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:text="Type d'opération :" />
 
-        <RadioButton
-            android:id="@+id/button_emprunt"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Emprunt" />
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/type"
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/button_retour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Retour" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/button_emprunt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emprunt" />
+
+            <RadioButton
+                android:id="@+id/button_retour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Retour" />
+        </RadioGroup>
     </RelativeLayout>
 
 
@@ -173,6 +177,6 @@
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/button_send"/>
+            android:layout_toRightOf="@+id/button_send" />
     </RelativeLayout>
 </LinearLayout>
