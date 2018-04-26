@@ -1,218 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="fr.ensimag.eazyboss.MainActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-
-    <RelativeLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="fr.ensimag.eazyboss.MainActivity">
 
-        <Button
-            android:id="@+id/button_scan_etu"
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:text="@string/button_scan" />
+            android:layout_margin="10dp">
 
-        <!-- TODO aligner mieux que ça -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/button_scan_etu"
-            android:orientation="vertical">
-
-            <TextView
+            <Button
+                android:id="@+id/button_scan_etu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/text_scan_etu" />
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:text="@string/button_scan" />
 
-            <TextView
-                android:id="@+id/result_etu"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/result_scan_etu" />
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/button_scan_etu"
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/text_scan_etu" />
+
+                <TextView
+                    android:id="@+id/result_etu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/result_scan_etu" />
+
+            </LinearLayout>
+        </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-
-        <Button
-            android:id="@+id/button_scan_prof"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:text="@string/button_scan" />
+            android:layout_margin="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/button_scan_prof"
-            android:orientation="vertical">
-
-            <TextView
+            <Button
+                android:id="@+id/button_scan_prof"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/text_scan_prof" />
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:text="@string/button_scan" />
 
-            <TextView
-                android:id="@+id/result_prof"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/result_scan_prof" />
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/button_scan_prof"
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/text_scan_prof" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/result_prof"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/result_scan_prof" />
 
-        <Button
-            android:id="@+id/button_scan_carte"
-            android:layout_width="wrap_content"
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:text="@string/button_scan" />
+            android:layout_margin="10dp">
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/button_scan_carte"
-            android:orientation="vertical">
-
-            <TextView
+            <Button
+                android:id="@+id/button_scan_carte"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/text_scan_carte" />
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:text="@string/button_scan" />
 
-            <TextView
-                android:id="@+id/result_carte"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/result_scan_carte" />
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/button_scan_carte"
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/text_scan_carte" />
+
+                <TextView
+                    android:id="@+id/result_carte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/result_scan_carte" />
+
+            </LinearLayout>
+        </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="5dp">
-        <!--android:background="@drawable/background_border"-->
-
-
-        <TextView
-            android:id="@+id/type"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
-            android:text="Type d'opération :" />
+            android:layout_margin="5dp">
+            <!--android:background="@drawable/background_border"-->
 
-        <RadioGroup
-            android:id="@+id/radio_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/type"
-            android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/button_emprunt"
+            <TextView
+                android:id="@+id/type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Emprunt" />
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:text="Type d'opération :" />
 
-            <RadioButton
-                android:id="@+id/button_retour"
+            <RadioGroup
+                android:id="@+id/radio_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Retour" />
-        </RadioGroup>
-    </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/type"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/button_emprunt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Emprunt" />
+
+                <RadioButton
+                    android:id="@+id/button_retour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Retour" />
+            </RadioGroup>
+        </RelativeLayout>
 
 
-    <!--TODO changer pour une barre ou une liste ?-->
+        <!--TODO changer pour une barre ou une liste ?-->
 
-    <RelativeLayout
-        android:id="@+id/choix_duree"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
-        <TextView
-            android:id="@+id/duree"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/choix_duree"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:text="Durée de l'emprunt :"
-            android:layout_margin="10dp"/>
+            android:layout_margin="5dp">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/duree"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/duree1"
+            <TextView
+                android:id="@+id/duree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 semaine" />
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:text="Durée de l'emprunt :" />
 
-            <RadioButton
-                android:id="@+id/duree2"
+            <RadioGroup
+                android:id="@+id/radio_duree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 mois" />
-        </RadioGroup>
-    </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/duree"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/duree1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 semaine" />
+
+                <RadioButton
+                    android:id="@+id/duree2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 mois" />
+            </RadioGroup>
+        </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/button_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/button_send" />
+            <Button
+                android:id="@+id/button_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/button_send" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/button_send" />
-    </RelativeLayout>
-</LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/button_send" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton retourButton;
     private RequestQueue queue;
     private ProgressBar spinner;
-    private SeekBar duree;
     private RelativeLayout choixDuree;
     private RadioGroup radioType;
+    private RadioGroup radioDuree;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
 
@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         choixDuree = findViewById(R.id.choix_duree);
         choixDuree.setVisibility(View.GONE);
+        radioDuree = findViewById(R.id.radio_duree);
 
         radioType = findViewById(R.id.radio_type);
         radioType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -211,6 +212,8 @@ public class MainActivity extends AppCompatActivity {
                 params.put("etudiant", resultEtu.getText().toString());
                 params.put("carte", resultCarte.getText().toString());
                 params.put("prof", resultProf.getText().toString());
+                RadioButton dureeButton = findViewById(radioDuree.getCheckedRadioButtonId());
+                params.put("duree", dureeButton.getText().toString());
                 if (empruntButton.isChecked()) {
                     params.put("emprunt", "true");
                 } else {
