@@ -78,18 +78,18 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             if (data != null) {
                 // We get the barcode that the scan activity sent
-                Barcode barcode = data.getParcelableExtra("barcode");
+                String value = data.getStringExtra("barcode");
                 // We display the value of the barcode in the current button
                 // currentButton.setText(barcode.displayValue);
                 // We need to set the boolean value associated to the Button to true
                 if (currentButton == scanEtu) {
-                    resultEtu.setText(barcode.displayValue);
+                    resultEtu.setText(value);
                     etuOk = true;
                 } else if (currentButton == scanProf) {
-                    resultProf.setText(barcode.displayValue);
+                    resultProf.setText(value);
                     profOk = true;
                 } else {
-                    resultCarte.setText(barcode.displayValue);
+                    resultCarte.setText(value);
                     carteOk = true;
                 }
             } else {
