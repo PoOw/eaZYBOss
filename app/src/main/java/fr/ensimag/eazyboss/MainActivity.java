@@ -19,8 +19,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout choixDuree;
     private RadioGroup radioType;
     private RadioGroup radioDuree;
+    private String tokenProf;
+    private String loginProf;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
 
@@ -77,15 +83,17 @@ public class MainActivity extends AppCompatActivity {
             if (data != null) {
                 // We get the barcode that the scan activity sent
                 String value = data.getStringExtra("barcode");
-                // We display the value of the barcode in the current button
-                // currentButton.setText(barcode.displayValue);
-                // We need to set the boolean value associated to the Button to true
+                /*
+                 * We display the value of the barcode in the current button
+                 * unless for professor
+                 * We also need to set the boolean value associated to the Button to true
+                 */
                 if (currentButton == scanEtu) {
                     resultEtu.setText(value);
                     etuOk = true;
                 } else if (currentButton == scanProf) {
-                    resultProf.setText(value);
-                    profOk = true;
+                    // call the authenticate function
+                    authenticate(value);
                 } else {
                     resultCarte.setText(value);
                     carteOk = true;
@@ -176,6 +184,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void authenticate(final String codeProf) {
+        String url = "https://eazyboss.herokuapp.com/secret/appAuthenticate";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            tokenProf = response.getString("token");
+                            loginProf = response.getString("login");
+                            scanProf.setText(loginProf);
+                            profOk = true;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Echec lors de l'authentification, veuillez réessayer", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }) {
+            // Here we add the parameters of our POST method : the code we just scanned
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("code", codeProf);
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setTag(TAG);
+
+        // Adding the request to queue
+        queue.add(jsonObjectRequest);
+    }
 
     /**
      * Send a request to the server using POST method
@@ -183,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
      * We're using Volley
      */
     private void sendingPostRequest() {
-        String url = "https://eazyboss.glitch.me/ajout";
+        String url = "https://eazyboss.herokuapp.com/secret/ajout";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -210,6 +255,8 @@ public class MainActivity extends AppCompatActivity {
                 params.put("etudiant", resultEtu.getText().toString());
                 params.put("carte", resultCarte.getText().toString());
                 params.put("prof", resultProf.getText().toString());
+                // We add to the parameters teacher's token, used to authenticate him
+                params.put("token", tokenProf);
                 RadioButton dureeButton = findViewById(radioDuree.getCheckedRadioButtonId());
                 params.put("duree", dureeButton.getText().toString());
                 if (empruntButton.isChecked()) {
