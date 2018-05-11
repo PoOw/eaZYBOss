@@ -19,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -51,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup radioDuree;
     private String tokenProf;
     private String loginProf;
+    private String codeProf;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
+    final private String URL = "https://eazyboss.glitch.me/";
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
 
     /**
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     etuOk = true;
                 } else if (currentButton == scanProf) {
                     // call the authenticate function
+                    codeProf = value;
                     authenticate(value);
                 } else {
                     resultCarte.setText(value);
@@ -185,15 +187,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void authenticate(final String codeProf) {
-        String url = "https://eazyboss.herokuapp.com/secret/appAuthenticate";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null,
-                new Response.Listener<JSONObject>() {
+        String url = URL + "secret/appAuthenticate";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         try {
-                            tokenProf = response.getString("token");
-                            loginProf = response.getString("login");
-                            scanProf.setText(loginProf);
+                            JSONObject jsonObject = new JSONObject(response);
+                            tokenProf = jsonObject.getString("token");
+                            loginProf = jsonObject.getString("login");
+                            resultProf.setText(loginProf);
                             profOk = true;
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -216,10 +219,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        jsonObjectRequest.setTag(TAG);
+        stringRequest.setTag(TAG);
 
         // Adding the request to queue
-        queue.add(jsonObjectRequest);
+        queue.add(stringRequest);
     }
 
     /**
@@ -228,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
      * We're using Volley
      */
     private void sendingPostRequest() {
-        String url = "https://eazyboss.herokuapp.com/secret/ajout";
+        String url = URL + "secret/ajout";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -254,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("etudiant", resultEtu.getText().toString());
                 params.put("carte", resultCarte.getText().toString());
-                params.put("prof", resultProf.getText().toString());
+                params.put("prof", codeProf);
                 // We add to the parameters teacher's token, used to authenticate him
                 params.put("token", tokenProf);
                 RadioButton dureeButton = findViewById(radioDuree.getCheckedRadioButtonId());
