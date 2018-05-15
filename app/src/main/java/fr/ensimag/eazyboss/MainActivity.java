@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private String loginProf;
     private String codeProf;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
-    final private String URL = "https://eazyboss.glitch.me/";
+    final private String URL = "https://eazyboss.herokuapp.com/";
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
 
     /**
