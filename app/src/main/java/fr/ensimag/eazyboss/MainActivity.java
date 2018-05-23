@@ -83,19 +83,21 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             if (data != null) {
                 // We get the barcode that the scan activity sent
-                String value = data.getStringExtra("barcode");
+                String result = data.getStringExtra("barcode");
+                // Here we get "zyboX" and we need to get X
+                String value = result.substring(4);
                 /*
                  * We display the value of the barcode in the current button
                  * unless for professor
                  * We also need to set the boolean value associated to the Button to true
                  */
                 if (currentButton == scanEtu) {
-                    resultEtu.setText(value);
+                    resultEtu.setText(result);
                     etuOk = true;
                 } else if (currentButton == scanProf) {
                     // call the authenticate function
-                    codeProf = value;
-                    authenticate(value);
+                    codeProf = result;
+                    authenticate(result);
                 } else {
                     resultCarte.setText(value);
                     carteOk = true;
