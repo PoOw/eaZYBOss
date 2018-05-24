@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -33,6 +31,9 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "cancel"; // We will use this tag to cancel our request
+    final private String URL = "https://eazyboss.herokuapp.com/";
+    final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
     private boolean etuOk = false;
     private boolean profOk = false;
     private boolean carteOk = false;
@@ -44,22 +45,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView resultCarte;
     private Button send;
     private Button currentButton;
-    private RadioButton empruntButton;
-    private RadioButton retourButton;
+    private Button empruntButton;
+    private Button retourButton;
+    private String typeTransaction;
     private RequestQueue queue;
     private ProgressBar spinner;
     private RelativeLayout choixDuree;
-    private RadioGroup radioType;
-    private RadioGroup radioDuree;
     private String tokenProf;
     private String loginProf;
     private String codeProf;
-    private String selectedDuration;
     private Spinner durationSpinner;
-    public static final String TAG = "cancel"; // We will use this tag to cancel our request
-    final private String URL = "https://eazyboss.herokuapp.com/";
-    final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
-
     /**
      * OnClickListener for our 3 Buttons
      * Start the scan and wait for the result
@@ -68,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             // currentButton is updated
-            currentButton = (Button)view;
+            currentButton = (Button) view;
             if (ActivityCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 // Access camera permission is not granted, we will ask for it
@@ -128,24 +123,32 @@ public class MainActivity extends AppCompatActivity {
         resultEtu = findViewById(R.id.result_etu);
         resultProf = findViewById(R.id.result_prof);
 
-        spinner=findViewById(R.id.progress_bar);
+        spinner = findViewById(R.id.progress_bar);
         spinner.setVisibility(View.GONE);
 
         choixDuree = findViewById(R.id.choix_duree);
         choixDuree.setVisibility(View.GONE);
 
-        radioType = findViewById(R.id.radio_type);
-        radioType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        empruntButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if(findViewById(i).equals(empruntButton)) {
-                    choixDuree.setVisibility(View.VISIBLE);
-                } else {
-                    choixDuree.setVisibility(View.GONE);
-                }
-
+            public void onClick(View view) {
+                choixDuree.setVisibility(View.VISIBLE);
+                typeTransaction = "Emprunt";
+                view.setBackgroundResource(R.drawable.semi_circle_right_full);
+                retourButton.setBackgroundResource(R.drawable.semi_circle_left);
             }
         });
+
+        retourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choixDuree.setVisibility(View.GONE);
+                typeTransaction = "Retour";
+                view.setBackgroundResource(R.drawable.semi_circle_left_full);
+                empruntButton.setBackgroundResource(R.drawable.semi_circle_right);
+            }
+        });
+
 
         scanEtu.setOnClickListener(scanner);
         scanProf.setOnClickListener(scanner);
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!(empruntButton.isChecked() || retourButton.isChecked())) {
+                if (typeTransaction == null) {
                     Toast.makeText(getApplicationContext(),
                             "Veuillez sélectionner un mode !", Toast.LENGTH_SHORT).show();
                 } else if (!(etuOk && carteOk && profOk)) {
@@ -277,10 +280,10 @@ public class MainActivity extends AppCompatActivity {
                 // We add to the parameters teacher's token, used to authenticate him
                 params.put("token", tokenProf);
                 params.put("duree", durationSpinner.getSelectedItem().toString());
-                if (empruntButton.isChecked()) {
+                if (typeTransaction.equals("Emprunt")) {
                     params.put("emprunt", "true");
                 } else {
-                    params.put("emprunt", "false");
+                    params.put("exmprunt", "false");
                 }
                 return params;
             }
