@@ -211,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
                             loginProf = jsonObject.getString("login");
                             resultProf.setText(loginProf);
                             profOk = true;
+                            scanCarte.setEnabled(true);
+                            scanEtu.setEnabled(true);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
