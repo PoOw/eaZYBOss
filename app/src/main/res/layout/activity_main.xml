@@ -171,6 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
 
+
             <TextView
                 android:id="@+id/duree"
                 android:layout_width="wrap_content"
@@ -180,26 +181,15 @@
                 android:layout_margin="10dp"
                 android:text="Durée de l'emprunt :" />
 
-            <RadioGroup
-                android:id="@+id/radio_duree"
-                android:layout_width="wrap_content"
+
+            <Spinner
+                android:id="@+id/duration_spinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@+id/duree"
-                android:orientation="horizontal">
+                android:layout_toRightOf="@+id/duree" />
 
-                <RadioButton
-                    android:id="@+id/duree1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 semaine" />
 
-                <RadioButton
-                    android:id="@+id/duree2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 mois" />
-            </RadioGroup>
         </RelativeLayout>
 
 
@@ -220,5 +210,26 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/button_send" />
         </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_duree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/duree"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/duree1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 semaine" />
+
+            <RadioButton
+                android:id="@+id/duree2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 mois" />
+        </RadioGroup>
     </LinearLayout>
 </ScrollView>

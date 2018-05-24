@@ -15,4 +15,10 @@
     <string name="duree_1">1 semaines</string>
     <string name="duree_2">2 semaines</string>
     <string name="duree_3">1 mois</string>
+    <string-array name="duration_array">
+        <item>1 semaine</item>
+        <item>2 semaines</item>
+        <item>1 mois</item>
+    </string-array>
+
 </resources>
