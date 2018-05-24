@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private String tokenProf;
     private String loginProf;
     private String codeProf;
+    private String selectedDuration;
+    private Spinner durationSpinner;
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
     final private String URL = "https://eazyboss.herokuapp.com/";
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
@@ -130,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
         choixDuree = findViewById(R.id.choix_duree);
         choixDuree.setVisibility(View.GONE);
-        radioDuree = findViewById(R.id.radio_duree);
 
         radioType = findViewById(R.id.radio_type);
         radioType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -165,15 +167,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        Spinner spinner = (Spinner) findViewById(R.id.duration_spinner);
+        durationSpinner = findViewById(R.id.duration_spinner);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.duration_array, android.R.layout.simple_spinner_item);
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
+        durationSpinner.setAdapter(adapter);
     }
 
     @Override
@@ -273,8 +274,7 @@ public class MainActivity extends AppCompatActivity {
                 params.put("prof", codeProf);
                 // We add to the parameters teacher's token, used to authenticate him
                 params.put("token", tokenProf);
-                RadioButton dureeButton = findViewById(radioDuree.getCheckedRadioButtonId());
-                params.put("duree", dureeButton.getText().toString());
+                params.put("duree", durationSpinner.getSelectedItem().toString());
                 if (empruntButton.isChecked()) {
                     params.put("emprunt", "true");
                 } else {
