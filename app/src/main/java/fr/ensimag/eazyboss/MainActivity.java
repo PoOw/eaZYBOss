@@ -3,6 +3,7 @@ package fr.ensimag.eazyboss;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -134,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 choixDuree.setVisibility(View.VISIBLE);
                 typeTransaction = "Emprunt";
+                ((Button)view).setTextColor(getResources().getColor(R.color.white));
                 view.setBackgroundResource(R.drawable.semi_circle_right_full);
+                retourButton.setTextColor(getResources().getColor(R.color.colorPrimary));
                 retourButton.setBackgroundResource(R.drawable.semi_circle_left);
             }
         });
@@ -144,7 +147,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 choixDuree.setVisibility(View.GONE);
                 typeTransaction = "Retour";
+                ((Button)view).setTextColor(getResources().getColor(R.color.white));
                 view.setBackgroundResource(R.drawable.semi_circle_left_full);
+                empruntButton.setTextColor(getResources().getColor(R.color.colorPrimary));
                 empruntButton.setBackgroundResource(R.drawable.semi_circle_right);
             }
         });
