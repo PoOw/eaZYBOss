@@ -60,7 +60,8 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/circle"
                 android:drawableTop="@android:drawable/ic_menu_camera"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp"
+                android:enabled="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -98,7 +99,8 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/circle"
                 android:drawableTop="@android:drawable/ic_menu_camera"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp"
+                android:enabled="false"/>
 
 
             <LinearLayout

@@ -15,6 +15,10 @@
     <string name="duree_1">1 semaines</string>
     <string name="duree_2">2 semaines</string>
     <string name="duree_3">1 mois</string>
+    <string name="saved_token_date">fr.ensimag.eazyboss.PREFERENCE_TOKEN_KEY</string>
+    <string name="saved_token_value">fr.ensimag.eazyboss.PREFERENCE_TOKENVALUE_KEY</string>
+    <string name="saved_code">fr.ensimag.eazyboss.PREFERENCE_CODE_KEY</string>
+    <string name="saved_login">fr.ensimag.eazyboss.PREFERENCE_LOGIN_KEY</string>
     <string-array name="duration_array">
         <item>1 semaine</item>
         <item>2 semaines</item>

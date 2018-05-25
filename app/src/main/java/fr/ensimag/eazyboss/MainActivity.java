@@ -1,10 +1,13 @@
 package fr.ensimag.eazyboss;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -56,58 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private String loginProf;
     private String codeProf;
     private Spinner durationSpinner;
-    /**
-     * OnClickListener for our 3 Buttons
-     * Start the scan and wait for the result
-     */
-    private View.OnClickListener scanner = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            // currentButton is updated
-            currentButton = (Button) view;
-            if (ActivityCompat.checkSelfPermission(MainActivity.this,
-                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                // Access camera permission is not granted, we will ask for it
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
-            } else {
-                Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-                startActivityForResult(intent, 0); // We launch the scan
-            }
-        }
-    };
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            if (data != null) {
-                // We get the barcode that the scan activity sent
-                String result = data.getStringExtra("barcode");
-                // Here we get "zyboX" and we need to get X
-                String value = result.substring(4);
-                /*
-                 * We display the value of the barcode in the current button
-                 * unless for professor
-                 * We also need to set the boolean value associated to the Button to true
-                 */
-                if (currentButton == scanEtu) {
-                    resultEtu.setText(result);
-                    etuOk = true;
-                } else if (currentButton == scanProf) {
-                    // call the authenticate function
-                    codeProf = result;
-                    authenticate(result);
-                } else {
-                    resultCarte.setText(value);
-                    carteOk = true;
-                }
-            } else {
-                currentButton.setText("Aucun barcode detecté !");
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        checkTokenValidity();
 
         scanEtu.setOnClickListener(scanner);
         scanProf.setOnClickListener(scanner);
@@ -176,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         durationSpinner = findViewById(R.id.duration_spinner);
-// Create an ArrayAdapter using the string array and a default spinner layout
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.duration_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
+        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
+        // Apply the adapter to the spinner
         durationSpinner.setAdapter(adapter);
     }
 
@@ -194,9 +147,82 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void checkTokenValidity() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        long tokenTime = sharedPref.getLong(getString(R.string.saved_token_date), 0);
+        if (tokenTime > 0) {
+            // If a token has been saved, we need to check if it is still valid
+            long currentTime = System.currentTimeMillis();
+            if (currentTime < (tokenTime + 3600000)) {
+                // The token is still valid
+                tokenProf = sharedPref.getString(getString(R.string.saved_token_value), null);
+                codeProf = sharedPref.getString(getString(R.string.saved_code), null);
+                loginProf = sharedPref.getString(getString(R.string.saved_login), null);
+                resultProf.setText(loginProf);
+                // The user is now authenticate
+                scanEtu.setEnabled(true);
+                scanCarte.setEnabled(true);
+                profOk = true;
+            }
+        }
+    }
+
+    /**
+     * OnClickListener for our 3 Buttons
+     * Start the scan and wait for the result
+     */
+    private View.OnClickListener scanner = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            // currentButton is updated
+            currentButton = (Button)view;
+            if (ActivityCompat.checkSelfPermission(MainActivity.this,
+                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                // Access camera permission is not granted, we will ask for it
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.CAMERA},
+                        MY_PERMISSIONS_REQUEST_CAMERA);
+            } else {
+                Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+                startActivityForResult(intent, 0); // We launch the scan
+            }
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            if (data != null) {
+                // We get the barcode that the scan activity sent
+                String result = data.getStringExtra("barcode");
+                // Here we get "zyboX" and we need to get X
+                String value = result.substring(4);
+                /*
+                 * We display the value of the barcode in the current button
+                 * unless for professor
+                 * We also need to set the boolean value associated to the Button to true
+                 */
+                if (currentButton == scanEtu) {
+                    resultEtu.setText(result);
+                    etuOk = true;
+                } else if (currentButton == scanProf) {
+                    // call the authenticate function
+                    codeProf = result;
+                    authenticate(result);
+                } else {
+                    resultCarte.setText(value);
+                    carteOk = true;
+                }
+            } else {
+                currentButton.setText("Aucun barcode detecté !");
+            }
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CAMERA: {
                 // If request is cancelled, the result arrays are empty.
@@ -208,6 +234,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is called after the teacher's QRcode has been scanned.
+     * It's purpose is to authenticate the teacher on the web server
+     * to allow him to send data to it. If the parameter is valid, the server
+     * will send back a 1 hour valid token that will be saved in SharedPreferences
+     * @param codeProf The value of the hash that the user just scanned
+     */
     private void authenticate(final String codeProf) {
         String url = URL + "secret/appAuthenticate";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -222,6 +255,14 @@ public class MainActivity extends AppCompatActivity {
                             profOk = true;
                             scanCarte.setEnabled(true);
                             scanEtu.setEnabled(true);
+                            // Here we need to write all the information associated to the token in SharedPreferences
+                            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putLong(getString(R.string.saved_token_date), System.currentTimeMillis());
+                            editor.putString(getString(R.string.saved_token_value), tokenProf);
+                            editor.putString(getString(R.string.saved_login), loginProf);
+                            editor.putString(getString(R.string.saved_code), codeProf);
+                            editor.commit();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -268,7 +309,6 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Manage the error
                 spinner.setVisibility(View.GONE);
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Echec de la requête http", Toast.LENGTH_LONG);
