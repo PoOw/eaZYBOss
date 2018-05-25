@@ -1,13 +1,15 @@
 package fr.ensimag.eazyboss;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -59,6 +61,101 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "cancel"; // We will use this tag to cancel our request
     final private String URL = "https://eazyboss.herokuapp.com/";
     final private int MY_PERMISSIONS_REQUEST_CAMERA = 42;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        queue = Volley.newRequestQueue(getApplicationContext());
+        scanEtu = findViewById(R.id.button_scan_etu);
+        scanProf = findViewById(R.id.button_scan_prof);
+        scanCarte = findViewById(R.id.button_scan_carte);
+        send = findViewById(R.id.button_send);
+        empruntButton = findViewById(R.id.button_emprunt);
+        retourButton = findViewById(R.id.button_retour);
+        resultCarte = findViewById(R.id.result_carte);
+        resultEtu = findViewById(R.id.result_etu);
+        resultProf = findViewById(R.id.result_prof);
+
+        spinner=findViewById(R.id.progress_bar);
+        spinner.setVisibility(View.GONE);
+
+        choixDuree = findViewById(R.id.choix_duree);
+        choixDuree.setVisibility(View.GONE);
+
+        radioType = findViewById(R.id.radio_type);
+        radioType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(findViewById(i).equals(empruntButton)) {
+                    choixDuree.setVisibility(View.VISIBLE);
+                } else {
+                    choixDuree.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+        checkTokenValidity();
+
+        scanEtu.setOnClickListener(scanner);
+        scanProf.setOnClickListener(scanner);
+        scanCarte.setOnClickListener(scanner);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!(empruntButton.isChecked() || retourButton.isChecked())) {
+                    Toast.makeText(getApplicationContext(),
+                            "Veuillez sélectionner un mode !", Toast.LENGTH_SHORT).show();
+                } else if (!(etuOk && carteOk && profOk)) {
+                    Toast.makeText(getApplicationContext(),
+                            "Veuillez effectuer les 3 scans avant d'envoyer la requête !", Toast.LENGTH_SHORT).show();
+                } else {
+                    spinner.setVisibility(View.VISIBLE);
+                    sendingPostRequest();
+                }
+            }
+        });
+
+
+        durationSpinner = findViewById(R.id.duration_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.duration_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        durationSpinner.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // We want to cancel all our http request
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
+    }
+
+    private void checkTokenValidity() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        long tokenTime = sharedPref.getLong(getString(R.string.saved_token_date), 0);
+        if (tokenTime > 0) {
+            // If a token has been saved, we need to check if it is still valid
+            long currentTime = System.currentTimeMillis();
+            if (currentTime < (tokenTime + 3600000)) {
+                // The token is still valid
+                tokenProf = sharedPref.getString(getString(R.string.saved_token_value), null);
+                codeProf = sharedPref.getString(getString(R.string.saved_code), null);
+                loginProf = sharedPref.getString(getString(R.string.saved_login), null);
+                resultProf.setText(loginProf);
+                // The user is now authenticate
+                scanEtu.setEnabled(true);
+                scanCarte.setEnabled(true);
+                profOk = true;
+            }
+        }
+    }
 
     /**
      * OnClickListener for our 3 Buttons
@@ -114,81 +211,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        queue = Volley.newRequestQueue(getApplicationContext());
-        scanEtu = findViewById(R.id.button_scan_etu);
-        scanProf = findViewById(R.id.button_scan_prof);
-        scanCarte = findViewById(R.id.button_scan_carte);
-        send = findViewById(R.id.button_send);
-        empruntButton = findViewById(R.id.button_emprunt);
-        retourButton = findViewById(R.id.button_retour);
-        resultCarte = findViewById(R.id.result_carte);
-        resultEtu = findViewById(R.id.result_etu);
-        resultProf = findViewById(R.id.result_prof);
-
-        spinner=findViewById(R.id.progress_bar);
-        spinner.setVisibility(View.GONE);
-
-        choixDuree = findViewById(R.id.choix_duree);
-        choixDuree.setVisibility(View.GONE);
-
-        radioType = findViewById(R.id.radio_type);
-        radioType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if(findViewById(i).equals(empruntButton)) {
-                    choixDuree.setVisibility(View.VISIBLE);
-                } else {
-                    choixDuree.setVisibility(View.GONE);
-                }
-
-            }
-        });
-
-        scanEtu.setOnClickListener(scanner);
-        scanProf.setOnClickListener(scanner);
-        scanCarte.setOnClickListener(scanner);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!(empruntButton.isChecked() || retourButton.isChecked())) {
-                    Toast.makeText(getApplicationContext(),
-                            "Veuillez sélectionner un mode !", Toast.LENGTH_SHORT).show();
-                } else if (!(etuOk && carteOk && profOk)) {
-                    Toast.makeText(getApplicationContext(),
-                            "Veuillez effectuer les 3 scans avant d'envoyer la requête !", Toast.LENGTH_SHORT).show();
-                } else {
-                    spinner.setVisibility(View.VISIBLE);
-                    sendingPostRequest();
-                }
-            }
-        });
-
-
-        durationSpinner = findViewById(R.id.duration_spinner);
-// Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.duration_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        durationSpinner.setAdapter(adapter);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // We want to cancel all our http request
-        if (queue != null) {
-            queue.cancelAll(TAG);
-        }
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CAMERA: {
                 // If request is cancelled, the result arrays are empty.
@@ -200,6 +224,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is called after the teacher's QRcode has been scanned.
+     * It's purpose is to authenticate the teacher on the web server
+     * to allow him to send data to it. If the parameter is valid, the server
+     * will send back a 1 hour valid token that will be saved in SharedPreferences
+     * @param codeProf The value of the hash that the user just scanned
+     */
     private void authenticate(final String codeProf) {
         String url = URL + "secret/appAuthenticate";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -214,6 +245,14 @@ public class MainActivity extends AppCompatActivity {
                             profOk = true;
                             scanCarte.setEnabled(true);
                             scanEtu.setEnabled(true);
+                            // Here we need to write all the information associated to the token in SharedPreferences
+                            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putLong(getString(R.string.saved_token_date), System.currentTimeMillis());
+                            editor.putString(getString(R.string.saved_token_value), tokenProf);
+                            editor.putString(getString(R.string.saved_login), loginProf);
+                            editor.putString(getString(R.string.saved_code), codeProf);
+                            editor.commit();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -260,7 +299,6 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Manage the error
                 spinner.setVisibility(View.GONE);
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Echec de la requête http", Toast.LENGTH_LONG);
