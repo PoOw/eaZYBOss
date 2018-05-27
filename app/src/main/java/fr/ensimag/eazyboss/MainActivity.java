@@ -196,8 +196,6 @@ public class MainActivity extends AppCompatActivity {
             if (data != null) {
                 // We get the barcode that the scan activity sent
                 String result = data.getStringExtra("barcode");
-                // Here we get "zyboX" and we need to get X
-                String value = result.substring(4);
                 /*
                  * We display the value of the barcode in the current button
                  * unless for professor
@@ -211,8 +209,20 @@ public class MainActivity extends AppCompatActivity {
                     codeProf = result;
                     authenticate(result);
                 } else {
-                    resultCarte.setText(value);
-                    carteOk = true;
+                    /*
+                     * Here we should get "zyboX" where X is the card number
+                     * If we don't, we will notify the user that the QR code is not valid
+                     */
+                    if (result.length() < 5 || !(result.substring(0,4).equals("zybo"))) {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Contenu du QR code invalide, avez-vous bien scanné une carte ZYBO ?",
+                                Toast.LENGTH_LONG);
+                        toast.show();
+                    } else {
+                        String value = result.substring(4);
+                        resultCarte.setText(value);
+                        carteOk = true;
+                    }
                 }
             } else {
                 currentButton.setText("Aucun barcode detecté !");
