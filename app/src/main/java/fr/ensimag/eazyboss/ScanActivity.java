@@ -18,6 +18,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * send the barcode scanned to MainActivity via an intent and then finish
  */
 public class ScanActivity extends Activity implements ZXingScannerView.ResultHandler {
+
     private ZXingScannerView mScannerView;
     private ArrayList<Integer> mSelectedIndices;
 
@@ -53,6 +54,9 @@ public class ScanActivity extends Activity implements ZXingScannerView.ResultHan
         finish(); // we are coming back to main activity
     }
 
+    /**
+     * Set up the recognized formats during the scan
+     */
     public void setupFormats() {
         List<BarcodeFormat> formats = new ArrayList<>();
         if(mSelectedIndices == null || mSelectedIndices.isEmpty()) {

@@ -263,6 +263,10 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString(getString(R.string.saved_login), loginProf);
                             editor.putString(getString(R.string.saved_code), codeProf);
                             editor.commit();
+                            // Notify the user that the operation was successful
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Authentifié en tant que " + loginProf, Toast.LENGTH_LONG);
+                            toast.show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -328,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
                 if (typeTransaction.equals("Emprunt")) {
                     params.put("emprunt", "true");
                 } else {
-                    params.put("exmprunt", "false");
+                    params.put("emprunt", "false");
                 }
                 return params;
             }
